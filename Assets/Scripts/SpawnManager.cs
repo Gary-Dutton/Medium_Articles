@@ -10,6 +10,8 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyPrefab;
     [SerializeField]
     private GameObject _enemyContainer;
+    [SerializeField]
+    private GameObject _powerUpPrefab;
 
     private bool _stopSpawning = false;
 
@@ -18,6 +20,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnRoutine());
+        StartCoroutine(SpawnPowerUpRoutine());
     }
 
     // Update is called once per frame
@@ -35,6 +38,16 @@ public class SpawnManager : MonoBehaviour
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(5.0f);
 
+        }
+    }
+
+    IEnumerator SpawnPowerUpRoutine()
+    {
+        while (_stopSpawning == false)
+        {
+            Vector3 posToSpawnPowerUp = new Vector3(Random.Range(-9f, 9f), 7, 0);
+            Instantiate(_powerUpPrefab, posToSpawnPowerUp, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(3.0f, 15.0f));
         }
     }
 
