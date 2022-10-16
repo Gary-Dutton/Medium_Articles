@@ -9,6 +9,7 @@ TagManager:
   - Background
   - TripleShot
   - TripleShotPowerUp
+  - SpeedPowerUp
   layers:
   - Default
   - TransparentFX

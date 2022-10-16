@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.5f;
+    private float _speedMultipler = 2.0f;
     [SerializeField]
     private GameObject _laserShot;
     [SerializeField]
     private GameObject _tripleShot;
+    [SerializeField]
+    private GameObject _speedBoost;
     [SerializeField]
     private float _fireRate = 0.3f;
 
@@ -22,6 +26,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private bool _isTripleShotActive;
+    [SerializeField]
+    private bool _isSpeedBoostActive;
 
 
     // Start is called before the first frame update
@@ -108,5 +114,19 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isTripleShotActive = false;
+    }
+
+    public void SpeedBoostPowerUp()
+    {
+        _isSpeedBoostActive = true;
+        _speed *= _speedMultipler;
+        StartCoroutine(SpeedBoostPowerUpPowerDown());
+    }
+
+    IEnumerator SpeedBoostPowerUpPowerDown()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _speed /= _speedMultipler;
+        _isSpeedBoostActive = false;
     }
 }
